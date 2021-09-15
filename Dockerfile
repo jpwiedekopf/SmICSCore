@@ -1,6 +1,14 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+
+ARG OPENEHR_DB
+ARG OPENEHR_USER
+ARG OPENEHR_PASSWD
+ENV OPENEHR_DB $OPENEHR_DB
+ENV OPENEHR_USER $OPENEHR_USER
+ENV OPENEHR_PASSWD $OPENEHR_PASSWD
+
 WORKDIR /app
 EXPOSE 9787
 WORKDIR /src
@@ -15,13 +23,6 @@ RUN dotnet restore "SmICSWebApp/SmICSWebApp.csproj"
 WORKDIR /src/.
 COPY . .
 RUN dotnet build "SmICSWebApp/SmICSWebApp.csproj" -c Release -o /app/build
-
-ARG repo=default_value
-ARG user=default_value
-ARG passwd=default_value 
-ENV OPENEHR_DB=$repo
-ENV OPENEHR_USER=$user
-ENV OPENEHR_PASSWD=$passwd
 
 FROM build AS publish
 COPY . ./
