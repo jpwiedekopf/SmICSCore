@@ -462,3 +462,7 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .pnp.*
+
+*/.vscode/
+.vscode/
+WebApp.Test/mono_crash*
