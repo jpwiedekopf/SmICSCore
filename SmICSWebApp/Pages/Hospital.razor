@@ -2,8 +2,8 @@
 
 @using SmICSCoreLib.StatistikDataModels;
 @using System.Collections.Generic;
-@using SmICSCoreLib.AQL.Patient_Stay.Count;
-@using SmICSCoreLib.AQL.Patient_Stay.Stationary
+@using SmICSCoreLib.Factories.PatientStay.Count;
+@using SmICSCoreLib.Factories.PatientStay.Stationary
 @using ChartJs.Blazor.LineChart
 @using ChartJs.Blazor.PieChart
 @using Microsoft.Extensions.Logging
@@ -290,8 +290,8 @@
     private List<CountDataModel> allNegativTest;
     private List<CountDataModel> allNegativPat;
     private List<CountDataModel> allPositivPat;
-    private List<Patient> allNoskumalPat;
-    private List<Patient> noskumalPatByContact;
+    private List<PatientModel> allNoskumalPat;
+    private List<PatientModel> noskumalPatByContact;
     private int anzahlFaelle;
     private int anzahlPatTage;
     private bool status;

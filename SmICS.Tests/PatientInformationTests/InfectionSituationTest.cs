@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
-using SmICSCoreLib.AQL.General;
-using SmICSCoreLib.AQL.Patient_Stay.Count;
-using SmICSCoreLib.AQL.Patient_Stay.Stationary;
-using SmICSCoreLib.AQL.PatientInformation.Infection_situation;
-using SmICSCoreLib.AQL.PatientInformation.Patient_Bewegung;
-using SmICSCoreLib.AQL.PatientInformation.Symptome;
-using SmICSCoreLib.AQL.PatientInformation.Vaccination;
+using SmICSCoreLib.Factories.General;
+using SmICSCoreLib.Factories.PatientStay.Count;
+using SmICSCoreLib.Factories.PatientStay.Stationary;
+using SmICSCoreLib.Factories.InfectionSituation;
+using SmICSCoreLib.Factories.PatientMovement;
+using SmICSCoreLib.Factories.Symptome;
+using SmICSCoreLib.Factories.Vaccination;
 using SmICSCoreLib.REST;
 using SmICSCoreLib.StatistikDataModels;
 using SmICSDataGenerator.Tests;
@@ -36,8 +36,8 @@ namespace SmICSFactory.Tests.PatientInformationTests
             IStationaryFactory stationaryFactory = new StationaryFactory(_data);
             InfectionSituationFactory infecFac = new InfectionSituationFactory(countFactory, stationaryFactory, symptomFac, patMoveFac, vaccFac, NullLogger<InfectionSituationFactory>.Instance);
 
-            List<Patient> actual = infecFac.Process(patientParams);
-            List<Patient> expected = GetExpectedPatientModels(ehrNo, expectedResultSet);
+            List<PatientModel> actual = infecFac.Process(patientParams);
+            List<PatientModel> expected = GetExpectedPatientModels(ehrNo, expectedResultSet);
 
             Assert.Equal(expected.Count, actual.Count);
             for (int i = 0; i < actual.Count; i++)
@@ -81,12 +81,12 @@ namespace SmICSFactory.Tests.PatientInformationTests
         }
 
 
-        private List<Patient> GetExpectedPatientModels(int ehrNo, int ResultSetID)
+        private List<PatientModel> GetExpectedPatientModels(int ehrNo, int ResultSetID)
         {
             string path = "../../../../TestData/InfectionSituationTestResults.json";
             string parameterPath = "../../../../TestData/GeneratedEHRIDs.json";
 
-            List<Patient> result = ExpectedResultJsonReader.ReadResults<Patient, PatientIDs>(path, parameterPath, ResultSetID, ehrNo, ExpectedType.PATIENT);
+            List<PatientModel> result = ExpectedResultJsonReader.ReadResults<PatientModel, PatientIDs>(path, parameterPath, ResultSetID, ehrNo, ExpectedType.PATIENT);
             return result;
         }
     }
