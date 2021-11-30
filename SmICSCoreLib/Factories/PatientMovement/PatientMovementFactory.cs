@@ -56,11 +56,11 @@ namespace SmICSCoreLib.Factories.PatientMovement
 
                     List<EpisodeOfCareModel> episodeOfCareList = RestDataAccess.AQLQuery<EpisodeOfCareModel>(AQLCatalog.PatientAdmission(episodeOfCareParam));
                     List<EpisodeOfCareModel> discharges = RestDataAccess.AQLQuery<EpisodeOfCareModel>(AQLCatalog.PatientDischarge(episodeOfCareParam));
-                    if (!(episodeOfCareList is null))
+                    if (!(episodeOfCareList is null) && episodeOfCareList.Count > 0)
                     {
                         //result.First because there can be just one admission/discharge timestamp for each case
                         episodeOfCare = episodeOfCareList[0];
-                        if(discharges != null)
+                        if(discharges != null && discharges.Count > 0)
                         {
                             episodeOfCare.Ende = discharges[0].Ende;
                         }
